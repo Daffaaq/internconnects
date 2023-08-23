@@ -34,6 +34,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/cv', [CuricullumVitaeController::class, 'index'])->name('admin.cv');
         Route::get('/cv/create', [CuricullumVitaeController::class, 'create'])->name('admin.cv.create');
         Route::post('/cv', [CuricullumVitaeController::class, 'store'])->name('admin.cv.store');
+        Route::get('/cv/{cv}/edit', [CuricullumVitaeController::class, 'edit'])->name('admin.cv.edit');
+        Route::put('/cv/{cv}', [CuricullumVitaeController::class, 'update'])->name('admin.cv.update');
+        Route::delete('/cv/{cv}', [CuricullumVitaeController::class, 'destroy'])->name('admin.cv.destroy');
         // Route::resource('admin/cv', CuricullumVitaeController::class)->except(['show']);
     });
     Route::prefix('admin')->group(function () {

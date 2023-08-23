@@ -39,9 +39,17 @@
                         <p class="note-time">Time: {{ $curriculumVitaes->upload_time }}</p>
                     </div>
                     <div class="note-icons">
-                        <span class="icon-trash"></span>
-                        <span class="icon-pencil"></span>
+                        <a href="{{ route('admin.cv.edit', $curriculumVitaes) }}" class="icon-pencil" title="Edit"></a>
+                        <a href="{{ route('admin.cv.destroy', $curriculumVitaes) }}"
+                            onclick="event.preventDefault(); if (confirm('Temenan a?')) { document.getElementById('delete-form').submit(); }"
+                            class="icon-trash" title="Delete"></a>
+                        <form id="delete-form" action="{{ route('admin.cv.destroy', $curriculumVitaes) }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
                     </div>
+
                 </div>
             @endforeach
             <!-- ... (Catatan lainnya) ... -->

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\curriculumvitae;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CVFileRequest;
 
 class CuricullumVitaeController extends Controller
 {
@@ -36,24 +37,24 @@ class CuricullumVitaeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'file_cv' => 'required|mimes:pdf,png,jpg|max:100000', // Format dan ukuran file yang diizinkan
-        ],[
-            'file_cv.required' => 'The CV file is required.',
-            'file_cv.mimes' => 'The CV file must be a PDF, PNG, or JPG.',
-            'file_cv.max' => 'The CV file may not be larger than 2MB.',
-        ]);
 
+    private function storeCVFile($request)
+    {
         $file = $request->file('file_cv');
         $fileName = time() . '_' . $file->getClientOriginalName();
-        Storage::putFileAs('public/cv_files', $file, $fileName);
+        $file->storeAs('public/cv_files', $fileName);
+
+        return $fileName;
+    }
+
+    public function store(CVFileRequest $request)
+    {
+        $fileName = $this->storeCVFile($request);
 
         CurriculumVitae::create([
             'file_cv' => $fileName,
-            'upload_date' => now()->toDateString(), // Tanggal saat ini
-            'upload_time' => now()->toTimeString(), // Waktu saat ini
+            'upload_date' => now()->toDateString(),
+            'upload_time' => now()->toTimeString(),
         ]);
 
         return redirect()->route('admin.cv')->with('success', 'Curriculum Vitae has been added.');
@@ -76,9 +77,9 @@ class CuricullumVitaeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, CurriculumVitae $cv)
+    public function edit(CurriculumVitae $cv)
     {
-        return view('curriculumvitae.edit', compact('cv'));
+        return view('admin.cv.edit_cv', compact('cv'));
     }
 
     /**
@@ -88,16 +89,8 @@ class CuricullumVitaeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CurriculumVitae $cv)
+    public function update(CVFileRequest $request, CurriculumVitae $cv)
     {
-        $request->validate([
-            'file_cv' => 'nullable|mimes:pdf,png,jpg|max:100000', // Format dan ukuran file yang diizinkan
-        ],[
-            'file_cv.required' => 'The CV file is required.',
-            'file_cv.mimes' => 'The CV file must be a PDF, PNG, or JPG.',
-            'file_cv.max' => 'The CV file may not be larger than 2MB.',
-        ]);
-
         if ($request->hasFile('file_cv')) {
             // Hapus file CV lama dari direktori publik
             $oldFilePath = public_path('cv_files/' . $cv->file_cv);
@@ -106,19 +99,17 @@ class CuricullumVitaeController extends Controller
             }
 
             // Upload file CV yang baru
-            $file = $request->file('file_cv');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('cv_files'), $fileName);
+            $fileName = $this->storeCVFile($request);
 
             // Update data CV dengan file CV yang baru
             $cv->update([
                 'file_cv' => $fileName,
-                'upload_date' => now()->toDateString(), // Tanggal saat ini
-                'upload_time' => now()->toTimeString(), // Waktu saat ini
+                'upload_date' => now()->toDateString(),
+                'upload_time' => now()->toTimeString(),
             ]);
         }
 
-        return redirect()->route('curriculumvitae.index')->with('success', 'Curriculum Vitae has been updated.');
+        return redirect()->route('admin.cv')->with('success', 'Curriculum Vitae has been updated.');
     }
 
     /**
@@ -137,6 +128,6 @@ class CuricullumVitaeController extends Controller
 
         $cv->delete();
 
-        return redirect()->route('curriculumvitae.index')->with('success', 'Curriculum Vitae has been deleted.');
+        return redirect()->route('admin.cv')->with('success', 'Curriculum Vitae has been deleted.');
     }
 }
