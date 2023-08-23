@@ -1,4 +1,7 @@
 @include('admin.layouts.header')
+
 @include('admin.layouts.navigation')
-@include('admin.layouts.main')
+<div class="main">
+    @yield('content')
+</div>
 @include('admin.layouts.footer')

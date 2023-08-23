@@ -21,47 +21,63 @@
             </li>
 
             <li>
+                <a href="{{ route('admin.cv') }}">
+                    <span class="icon">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                    </span>
+                    <span class="title">Curriculum Vitae</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="#">
+                    <span class="icon">
+                        <ion-icon name="document-outline"></ion-icon>
+                    </span>
+                    <span class="title">Proposal</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="school-outline"></ion-icon>
+                    </span>
+                    <span class="title">Education</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="book-outline"></ion-icon>
+                    </span>
+                    <span class="title">Students</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="contract-outline"></ion-icon>
+                    </span>
+                    <span class="title">Internship</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="layers-outline"></ion-icon>
+                    </span>
+                    <span class="title">Data Final</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.superadmin') }}">
                     <span class="icon">
                         <ion-icon name="people-outline"></ion-icon>
                     </span>
-                    <span class="title">Customers</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <span class="icon">
-                        <ion-icon name="chatbubble-outline"></ion-icon>
-                    </span>
-                    <span class="title">Messages</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <span class="icon">
-                        <ion-icon name="help-outline"></ion-icon>
-                    </span>
-                    <span class="title">Help</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <span class="icon">
-                        <ion-icon name="settings-outline"></ion-icon>
-                    </span>
-                    <span class="title">Settings</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <span class="icon">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
-                    </span>
-                    <span class="title">Password</span>
+                    <span class="title">Admin</span>
                 </a>
             </li>
 

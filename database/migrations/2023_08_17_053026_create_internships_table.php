@@ -22,10 +22,12 @@ return new class extends Migration
 
             // Foreign Keys
             $table->unsignedBigInteger('students_id');
+            $table->unsignedBigInteger('internshiptemps_id');
             
 
             // Define Foreign Key Constraints
             $table->foreign('students_id')->references('id')->on('students');
+            $table->foreign('internshiptemps_id')->references('id')->on('internship_temps');
         });
     }
 

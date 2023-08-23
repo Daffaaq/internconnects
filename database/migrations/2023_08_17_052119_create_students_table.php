@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('religion');
+            $table->date('birthdate');
+            $table->integer('age')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->string('phone_number');
             $table->string('email')->unique();
@@ -32,8 +34,8 @@ return new class extends Migration
 
             // Define Foreign Key Constraints
             $table->foreign('education_id')->references('id')->on('education');
-            $table->foreign('cv_id')->references('id')->on('curriculumvitaes');
-            $table->foreign('proposals_id')->references('id')->on('proposals');
+            $table->foreign('cv_id')->references('id')->on('curriculumvitaes')->onDelete('cascade');
+            $table->foreign('proposals_id')->references('id')->on('proposals')->onDelete('cascade');
         });
     }
 

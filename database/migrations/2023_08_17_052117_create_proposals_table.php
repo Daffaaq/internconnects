@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('proposals', function (Blueprint $table) {
             $table->id();
             $table->string('file_proposals');
+            $table->date('upload_date'); // Kolom untuk tanggal unggah
+            $table->time('upload_time'); // Kolom untuk waktu unggah
             $table->timestamps();
         });
     }
