@@ -24,7 +24,7 @@ class ProposalsFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'file_proposals' => 'required|mimes:pdf,doc,docx|max:102400',
+            'file_proposals' => 'required|mimes:pdf|max:102400',
         ];
     }
 
@@ -37,7 +37,7 @@ class ProposalsFileRequest extends FormRequest
     {
         return [
             'file_proposals.required' => 'The proposals file is required.',
-            'file_proposals.mimes' => 'The proposals file must be a PDF, DOC, or DOCX.',
+            'file_proposals.mimes' => 'The proposals file must be a PDF',
             'file_proposals.max' => 'The proposals file must not exceed 100MB.',
         ];
     }

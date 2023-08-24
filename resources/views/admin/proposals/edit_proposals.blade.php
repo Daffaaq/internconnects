@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Edit Curriculum Vitae</title>
+    <title>Edit Proposal</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -19,22 +19,23 @@
             </div>
         @endif
         <div class="col-lg-6 shadow p-4 bg-light" id="form-all">
-            <h2 class="h3 text-center mb-4">Edit Curriculum Vitae</h2>
-            <form action="{{ route('admin.cv.update', $cv->id) }}" method="POST" enctype="multipart/form-data">
+            <h2 class="h3 text-center mb-4">Edit Proposal</h2>
+            <form action="{{ route('admin.proposals.update', $proposals->id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
-                    <label for="file_cv" class="form-label">Curriculum Vitae File</label>
-                    <input type="file" class="form-control @error('file_cv') is-invalid @enderror" id="file_cv"
-                        name="file_cv" accept=".pdf,.png,.jpg">
-                    @error('file_cv')
+                    <label for="file_proposal" class="form-label">Proposal File</label>
+                    <input type="file" class="form-control @error('file_proposal') is-invalid @enderror"
+                        id="file_proposal" name="file_proposal" accept=".pdf">
+                    @error('file_proposal')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                     @enderror
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('admin.cv') }}" class="btn btn-outline-secondary mt-3">Kembali</a>
+                    <a href="{{ route('admin.proposals') }}" class="btn btn-outline-secondary mt-3">Kembali</a>
                     <button type="submit" class="btn btn-primary mt-3">Simpan Perubahan</button>
                 </div>
             </form>

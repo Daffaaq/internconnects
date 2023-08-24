@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\proposals;
 use App\Http\Requests\ProposalsFileRequest;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProposalsController extends Controller
 {
@@ -64,7 +66,7 @@ class ProposalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(proposals $proposals)
     {
         //
     }
@@ -77,7 +79,8 @@ class ProposalsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $proposals = proposals::find($id);
+        return view('admin.proposals.edit_proposals', compact('proposals'));
     }
 
     /**
@@ -87,9 +90,27 @@ class ProposalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProposalsFileRequest $request, proposals $proposals)
     {
-        //
+        if ($request->hasFile('file_proposals')) {
+            // Hapus file proposals lama dari direktori publik
+            $oldfileprops = public_path('proposals/' . $proposals->file_proposals);
+            if (File::exists($oldfileprops)) {
+                File::delete($oldfileprops);
+            }
+
+            // Upload file proposals yang baru
+            $fileName = $this->storeProposalsFile($request);
+
+            // Update data CV dengan file CV yang baru
+            $proposals->update([
+                'file_proposals' => $fileName,
+                'upload_date' => now()->toDateString(),
+                'upload_time' => now()->toTimeString(),
+            ]);
+        }
+
+        return redirect()->route('admin.proposals')->with('success', 'Proposal has been updated.');
     }
 
     /**
@@ -98,8 +119,16 @@ class ProposalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(proposals $proposal)
     {
-        //
+        // Hapus file CV dari direktori publik
+        $filePath = public_path('proposals/' . $proposal->file_proposals);
+        if (File::exists($filePath)) {
+            File::delete($filePath);
+        }
+
+        $proposal->delete();
+
+        return redirect()->route('admin.proposals')->with('success', 'Proposal has been deleted.');
     }
 }

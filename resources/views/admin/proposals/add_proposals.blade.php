@@ -25,7 +25,7 @@
                 <div class="mb-3">
                     <label for="file_proposals" class="form-label">Proposals File</label>
                     <input type="file" class="form-control @error('file_proposals') is-invalid @enderror"
-                        id="file_proposals" name="file_proposals" accept=".pdf,.doc,.docx" required>
+                        id="file_proposals" name="file_proposals" accept=".pdf" required>
                     @error('file_proposals')
                         <div class="invalid-feedback">
                             {{ $message }}

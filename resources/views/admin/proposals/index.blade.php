@@ -30,32 +30,25 @@
                     @if (in_array(pathinfo($proposal->file_proposals, PATHINFO_EXTENSION), ['pdf']))
                         <a href="{{ Storage::url('proposals/' . $proposal->file_proposals) }}" class="pdf-link">Download
                             PDF</a>
-                   @elseif (in_array(pathinfo($proposal->file_proposals, PATHINFO_EXTENSION), ['doc', 'docx']))
-                        <a href="{{ Storage::url('proposals/' . $proposal->file_proposals) }}" class="pdf-link"
-                            id="download-link">Download DOCX</a>
-                        @if ($proposal->pdf_proposals)
-                            <a href="{{ Storage::url('proposals/' . $proposal->pdf_proposals) }}" class="pdf-link"
-                                id="download-pdf">Download PDF</a>
-                        @endif
                     @else
-                        <a href="{{ Storage::url('proposals/' . $proposal->file_proposals) }}" class="pdf-link">Download
-                            Image</a>
+                        <a href="{{ Storage::url('proposals/' . $proposal->file_proposals) }}"
+                            class="pdf-link download-link" data-id="{{ $proposal->id }}">Download DOCX</a>
                     @endif
                     <div class="note-date-time">
                         <p class="note-date">Date: {{ $proposal->upload_date }}</p>
                         <p class="note-time">Time: {{ $proposal->upload_time }}</p>
                     </div>
-                    {{-- <div class="note-icons">
-                <a href="{{ route('admin.proposals.edit', $proposal) }}" class="icon-pencil" title="Edit"></a>
-                <a href="{{ route('admin.proposals.destroy', $proposal) }}"
-                    onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form').submit(); }"
-                    class="icon-trash" title="Delete"></a>
-                <form id="delete-form" action="{{ route('admin.proposals.destroy', $proposal) }}" method="POST"
-                    style="display: none;">
-                    @csrf
-                    @method('DELETE')
-                </form>
-            </div> --}}
+                    <div class="note-icons">
+                        <a href="{{ route('admin.proposals.edit', $proposal) }}" class="icon-pencil" title="Edit"></a>
+                        <a href="{{ route('admin.proposals.destroy', $proposal) }}"
+                            onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form').submit(); }"
+                            class="icon-trash" title="Delete"></a>
+                        <form id="delete-form" action="{{ route('admin.proposals.destroy', $proposal) }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </div>
                 </div>
             @endforeach
             <!-- ... (Catatan lainnya) ... -->
@@ -63,10 +56,13 @@
 
     </div>
     <script>
-        document.getElementById('download-link').addEventListener('click', function(event) {
-            if (!confirm('Are you sure you want to download the DOCX file?')) {
-                event.preventDefault(); // Mencegah tindakan default (unduh file)
-            }
+        var downloadLinks = document.querySelectorAll('.download-link');
+        downloadLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                if (!confirm('Are you sure you want to download the DOCX file?')) {
+                    event.preventDefault(); // Mencegah tindakan default (unduh file)
+                }
+            });
         });
     </script>
 @endsection
