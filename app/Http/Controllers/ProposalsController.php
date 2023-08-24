@@ -92,13 +92,14 @@ class ProposalsController extends Controller
      */
     public function update(ProposalsFileRequest $request, proposals $proposals)
     {
+
         if ($request->hasFile('file_proposals')) {
             // Hapus file proposals lama dari direktori publik
             $oldfileprops = public_path('proposals/' . $proposals->file_proposals);
             if (File::exists($oldfileprops)) {
                 File::delete($oldfileprops);
             }
-
+            
             // Upload file proposals yang baru
             $fileName = $this->storeProposalsFile($request);
 

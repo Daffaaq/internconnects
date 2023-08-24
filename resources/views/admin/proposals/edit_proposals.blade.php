@@ -25,10 +25,10 @@
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
-                    <label for="file_proposal" class="form-label">Proposal File</label>
-                    <input type="file" class="form-control @error('file_proposal') is-invalid @enderror"
-                        id="file_proposal" name="file_proposal" accept=".pdf">
-                    @error('file_proposal')
+                    <label for="file_proposals" class="form-label">Proposal File</label>
+                    <input type="file" class="form-control @error('file_proposals') is-invalid @enderror"
+                        id="file_proposals" name="file_proposals" accept=".pdf">
+                    @error('file_proposals')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
