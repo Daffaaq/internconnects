@@ -5,6 +5,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\CuricullumVitaeController;
+use App\Http\Controllers\ProposalsController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,6 +39,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::put('/cv/{cv}', [CuricullumVitaeController::class, 'update'])->name('admin.cv.update');
         Route::delete('/cv/{cv}', [CuricullumVitaeController::class, 'destroy'])->name('admin.cv.destroy');
         // Route::resource('admin/cv', CuricullumVitaeController::class)->except(['show']);
+    });
+    Route::prefix('admin')->group(function () {
+        Route::get('/proposals', [ProposalsController::class, 'index'])->name('admin.proposals');
+        Route::get('/proposals/create', [ProposalsController::class, 'create'])->name('admin.proposals.create');
+        Route::post('/proposals', [ProposalsController::class, 'store'])->name('admin.proposals.store');
     });
     Route::prefix('admin')->group(function () {
         Route::get('/superadmin', [AdminController::class, 'index'])->name('admin.superadmin');

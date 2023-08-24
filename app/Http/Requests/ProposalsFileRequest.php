@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CVFileRequest extends FormRequest
+class ProposalsFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,21 @@ class CVFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'file_cv' => 'required|mimes:pdf,png,jpg|max:102400',
+            'file_proposals' => 'required|mimes:pdf,doc,docx|max:102400',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
     public function messages()
     {
         return [
-            'file_cv.required' => 'The CV file is required.',
-            'file_cv.mimes' => 'The CV file must be a PDF, PNG, or JPG.',
-            'file_cv.max' => 'The CV file may not be larger than 100mb.',
+            'file_proposals.required' => 'The proposals file is required.',
+            'file_proposals.mimes' => 'The proposals file must be a PDF, DOC, or DOCX.',
+            'file_proposals.max' => 'The proposals file must not exceed 100MB.',
         ];
     }
 }

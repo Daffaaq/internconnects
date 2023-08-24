@@ -30,7 +30,7 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="{{ route('admin.proposals') }}">
                     <span class="icon">
                         <ion-icon name="document-outline"></ion-icon>
                     </span>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\proposals;
+use App\Http\Requests\ProposalsFileRequest;
 
 class ProposalsController extends Controller
 {
@@ -13,7 +15,8 @@ class ProposalsController extends Controller
      */
     public function index()
     {
-        //
+        $proposals = proposals::all();
+        return view('admin.proposals.index', compact('proposals'));
     }
 
     /**
@@ -23,7 +26,7 @@ class ProposalsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.proposals.add_proposals');
     }
 
     /**
@@ -32,9 +35,27 @@ class ProposalsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    private function storeProposalsFile($request)
     {
-        //
+        $file = $request->file('file_proposals');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->storeAs('public/proposals', $fileName);
+
+        return $fileName;
+    }
+
+    public function store(ProposalsFileRequest  $request)
+    {
+        $fileName = $this->storeProposalsFile($request);
+
+        proposals::create([
+            'file_proposals' => $fileName,
+            'upload_date' => now()->toDateString(),
+            'upload_time' => now()->toTimeString(),
+        ]);
+
+        return redirect()->route('admin.proposals')->with('success', 'Proposal has been uploaded successfully');
     }
 
     /**

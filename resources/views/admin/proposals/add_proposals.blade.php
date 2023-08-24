@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Tambah Curriculum Vitae</title>
+    <title>Tambah Proposals</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -19,21 +19,21 @@
             </div>
         @endif
         <div class="col-lg-6 shadow p-4 bg-light" id="form-all">
-            <h2 class="h3 text-center mb-4">Tambah Curriculum Vitae</h2>
-            <form action="{{ route('admin.cv.store') }}" method="POST" enctype="multipart/form-data">
+            <h2 class="h3 text-center mb-4">Tambah Proposals</h2>
+            <form action="{{ route('admin.proposals.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label for="file_cv" class="form-label">Curriculum Vitae File</label>
-                    <input type="file" class="form-control @error('file_cv') is-invalid @enderror" id="file_cv"
-                        name="file_cv" accept=".pdf,.png,.jpg" required>
-                    @error('file_cv')
+                    <label for="file_proposals" class="form-label">Proposals File</label>
+                    <input type="file" class="form-control @error('file_proposals') is-invalid @enderror"
+                        id="file_proposals" name="file_proposals" accept=".pdf,.doc,.docx" required>
+                    @error('file_proposals')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                     @enderror
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('admin.cv') }}" class="btn btn-outline-secondary mt-3">Kembali</a>
+                    <a href="{{ route('admin.proposals') }}" class="btn btn-outline-secondary mt-3">Kembali</a>
                     <button type="submit" class="btn btn-primary mt-3">Tambah</button>
                 </div>
             </form>
