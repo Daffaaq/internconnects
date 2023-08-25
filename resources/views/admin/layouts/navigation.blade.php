@@ -39,7 +39,7 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="{{ route('admin.education')}}">
                     <span class="icon">
                         <ion-icon name="school-outline"></ion-icon>
                     </span>

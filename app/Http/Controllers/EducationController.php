@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\education;
 
 class EducationController extends Controller
 {
@@ -13,7 +14,8 @@ class EducationController extends Controller
      */
     public function index()
     {
-        //
+        $educations = education::all();
+        return view('admin.education.index', compact('educations'));
     }
 
     /**
@@ -23,7 +25,7 @@ class EducationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.education.add_education');
     }
 
     /**

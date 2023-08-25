@@ -39,20 +39,29 @@ class ProposalsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private function storeProposalsFile($request)
+    private function generateFileName($file)
     {
-        $file = $request->file('file_proposals');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->storeAs('public/proposalssave', $fileName);
+        return time() . '_' . $file->getClientOriginalName();
+    }
+
+    private function storeFile($file, $path)
+    {
+        $fileName = $this->generateFileName($file);
+        $file->storeAs($path, $fileName);
 
         return $fileName;
     }
 
     public function store(ProposalsFileRequest  $request)
     {
-        $fileName = $this->storeProposalsFile($request);
+        if(!$request->hasFile('file_proposals')) {
+            // Handle error
+        }
 
-        proposals::create([
+        $file = $request->file('file_proposals');
+        $fileName = $this->storeFile($file, 'public/proposalssave');
+
+        Proposals::create([
             'file_proposals' => $fileName,
             'upload_date' => now()->toDateString(),
             'upload_time' => now()->toTimeString(),
@@ -93,31 +102,23 @@ class ProposalsController extends Controller
      */
     public function update(ProposalsFileRequest $request, proposals $proposals)
     {
-        Log::info('Update method accessed.');
-
         if ($request->hasFile('file_proposals')) {
-            Log::info('File exists in request.');
-
+            // Delete old file from public directory
             $oldfileprops = storage_path('app/public/proposalssave/' . $proposals->file_proposals);
             if (File::exists($oldfileprops)) {
-                Log::info('Old file found and deleting.');
                 File::delete($oldfileprops);
-            } else {
-                Log::info('Old file not found.');
             }
 
-            $fileName = $this->storeProposalsFile($request);
-            Log::info('File stored with name: ' . $fileName);
+            // Upload new file
+            $file = $request->file('file_proposals');
+            $fileName = $this->storeFile($file, 'public/proposalssave');
 
+            // Update database with new file
             $proposals->update([
                 'file_proposals' => $fileName,
                 'upload_date' => now()->toDateString(),
                 'upload_time' => now()->toTimeString(),
             ]);
-            Log::info('Database updated.');
-            // dd($proposals);
-        } else {
-            Log::info('No file in request.');
         }
 
         return redirect()->route('admin.proposals')->with('success', 'Proposal has been updated.');

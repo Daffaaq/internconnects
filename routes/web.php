@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\CuricullumVitaeController;
 use App\Http\Controllers\ProposalsController;
+use App\Http\Controllers\EducationController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +48,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/proposals/{proposals}/edit', [ProposalsController::class, 'edit'])->name('admin.proposals.edit');
         Route::put('/proposals/{proposals}', [ProposalsController::class, 'update'])->name('admin.proposals.update');
         Route::delete('/proposals/{proposal}', [ProposalsController::class, 'destroy'])->name('admin.proposals.destroy');
+    });
+    Route::prefix('admin')->group(function () {
+        Route::get('/education', [EducationController::class, 'index'])->name('admin.education');
     });
     Route::prefix('admin')->group(function () {
         Route::get('/superadmin', [AdminController::class, 'index'])->name('admin.superadmin');
