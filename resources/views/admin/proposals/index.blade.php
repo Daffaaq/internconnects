@@ -28,10 +28,10 @@
                 <div class="note-card">
                     <h2>Proposal</h2>
                     @if (in_array(pathinfo($proposal->file_proposals, PATHINFO_EXTENSION), ['pdf']))
-                        <a href="{{ Storage::url('proposals/' . $proposal->file_proposals) }}" class="pdf-link">Download
+                        <a href="{{ Storage::url('proposalssave/' . $proposal->file_proposals) }}" class="pdf-link">Download
                             PDF</a>
                     @else
-                        <a href="{{ Storage::url('proposals/' . $proposal->file_proposals) }}"
+                        <a href="{{ Storage::url('proposalssave/' . $proposal->file_proposals) }}"
                             class="pdf-link download-link" data-id="{{ $proposal->id }}">Download DOCX</a>
                     @endif
                     <div class="note-date-time">
@@ -41,9 +41,10 @@
                     <div class="note-icons">
                         <a href="{{ route('admin.proposals.edit', $proposal) }}" class="icon-pencil" title="Edit"></a>
                         <a href="{{ route('admin.proposals.destroy', $proposal) }}"
-                            onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form').submit(); }"
+                            onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form-{{ $proposal->id }}').submit(); }"
                             class="icon-trash" title="Delete"></a>
-                        <form id="delete-form" action="{{ route('admin.proposals.destroy', $proposal) }}" method="POST"
+                        <form id="delete-form-{{ $proposal->id }}"
+                            action="{{ route('admin.proposals.destroy', $proposal) }}" method="POST"
                             style="display: none;">
                             @csrf
                             @method('DELETE')

@@ -44,8 +44,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/proposals', [ProposalsController::class, 'index'])->name('admin.proposals');
         Route::get('/proposals/create', [ProposalsController::class, 'create'])->name('admin.proposals.create');
         Route::post('/proposals', [ProposalsController::class, 'store'])->name('admin.proposals.store');
-        Route::get('/proposals/{proposal}/edit', [ProposalsController::class, 'edit'])->name('admin.proposals.edit');
-        Route::put('/proposals/{proposal}', [ProposalsController::class, 'update'])->name('admin.proposals.update');
+        Route::get('/proposals/{proposals}/edit', [ProposalsController::class, 'edit'])->name('admin.proposals.edit');
+        Route::put('/proposals/{proposals}', [ProposalsController::class, 'update'])->name('admin.proposals.update');
         Route::delete('/proposals/{proposal}', [ProposalsController::class, 'destroy'])->name('admin.proposals.destroy');
     });
     Route::prefix('admin')->group(function () {

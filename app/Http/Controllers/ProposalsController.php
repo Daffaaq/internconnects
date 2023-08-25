@@ -7,6 +7,7 @@ use App\Models\proposals;
 use App\Http\Requests\ProposalsFileRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ProposalsController extends Controller
 {
@@ -42,7 +43,7 @@ class ProposalsController extends Controller
     {
         $file = $request->file('file_proposals');
         $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->storeAs('public/proposals', $fileName);
+        $file->storeAs('public/proposalssave', $fileName);
 
         return $fileName;
     }
@@ -92,23 +93,31 @@ class ProposalsController extends Controller
      */
     public function update(ProposalsFileRequest $request, proposals $proposals)
     {
+        Log::info('Update method accessed.');
 
         if ($request->hasFile('file_proposals')) {
-            // Hapus file proposals lama dari direktori publik
-            $oldfileprops = public_path('proposals/' . $proposals->file_proposals);
-            if (File::exists($oldfileprops)) {
-                File::delete($oldfileprops);
-            }
-            
-            // Upload file proposals yang baru
-            $fileName = $this->storeProposalsFile($request);
+            Log::info('File exists in request.');
 
-            // Update data CV dengan file CV yang baru
+            $oldfileprops = storage_path('app/public/proposalssave/' . $proposals->file_proposals);
+            if (File::exists($oldfileprops)) {
+                Log::info('Old file found and deleting.');
+                File::delete($oldfileprops);
+            } else {
+                Log::info('Old file not found.');
+            }
+
+            $fileName = $this->storeProposalsFile($request);
+            Log::info('File stored with name: ' . $fileName);
+
             $proposals->update([
                 'file_proposals' => $fileName,
                 'upload_date' => now()->toDateString(),
                 'upload_time' => now()->toTimeString(),
             ]);
+            Log::info('Database updated.');
+            // dd($proposals);
+        } else {
+            Log::info('No file in request.');
         }
 
         return redirect()->route('admin.proposals')->with('success', 'Proposal has been updated.');
