@@ -19,42 +19,40 @@
     </div>
 
     <div class="notes-container">
-        <h1 class="notes-title">Education</h1>
+        <h1 class="notes-title">List Education</h1>
         <div class="add-note">
-            {{-- <a href="{{ route('admin.cv.create') }}" class="add-note-button">Add CV</a> --}}
+            <a href="{{ route('admin.education.create') }}" class="add-note-button">Add CV</a>
         </div>
-        {{-- <div class="notes-list">
-            @foreach ($curriculumVitaes as $curriculumVitaes)
+        <div class="notes-list">
+            @foreach ($educations as $educations)
                 <div class="note-card">
-                    <h2>CV</h2>
-                    @if (in_array(pathinfo($curriculumVitaes->file_cv, PATHINFO_EXTENSION), ['pdf']))
-                        <a href="{{ Storage::url('cv_files/' . $curriculumVitaes->file_cv) }}" class="pdf-link">Download
-                            PDF</a>
-                    @else
-                        <a href="{{ Storage::url('cv_files/' . $curriculumVitaes->file_cv) }}" class="pdf-link">Download
-                            Image</a>
-                    @endif
-                    <div class="note-date-time">
-                        <p class="note-date">Date: {{ $curriculumVitaes->upload_date }}</p>
-                        <p class="note-time">Time: {{ $curriculumVitaes->upload_time }}</p>
-                    </div>
+                    <h2>Education</h2>
+                    <a class="education">{{ $educations->school_name }}</a>
+                    <a class="education">{{ $educations->school_location }}</a>
+                    {{-- <a href="{{ $educations->file_cv }}" class="pdf-link">Download
+                        Image</a> --}}
+                    {{-- <div class="note-date-time">
+                        <p class="note-date"></p>
+                        <p class="note-time"></p>
+                    </div> --}}
                     <div class="note-icons">
-                        <a href="{{ route('admin.cv.edit', $curriculumVitaes) }}" class="icon-pencil" title="Edit"></a>
-                        <a href="{{ route('admin.cv.destroy', $curriculumVitaes) }}"
-                            onclick="event.preventDefault(); if (confirm('Temenan a?')) { document.getElementById('delete-form').submit(); }"
+                        <a href="{{ route('admin.education.edit', $educations->id) }}" class="icon-pencil"
+                            title="Edit"></a>
+                        <a href="{{ route('admin.education.destroy', $educations->id) }}"
+                            onclick="event.preventDefault(); if (confirm('Temenan a?')) { document.getElementById('delete-form-{{ $educations->id }}').submit(); }"
                             class="icon-trash" title="Delete"></a>
-                        <form id="delete-form" action="{{ route('admin.cv.destroy', $curriculumVitaes) }}" method="POST"
+                        <form id="delete-form-{{ $educations->id }}"
+                            action="{{ route('admin.education.destroy', $educations->id) }}" method="POST"
                             style="display: none;">
                             @csrf
                             @method('DELETE')
                         </form>
                     </div>
-
                 </div>
             @endforeach
             <!-- ... (Catatan lainnya) ... -->
 
             <!-- Add more note cards here -->
-        </div> --}}
+        </div>
     </div>
 @endsection

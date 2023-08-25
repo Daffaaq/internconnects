@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Tambah Pendidikan</title>
+    <title>Edit Pendidikan</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -19,13 +19,15 @@
             </div>
         @endif
         <div class="col-lg-6 shadow p-4 bg-light" id="form-all">
-            <h2 class="h3 text-center mb-4">Tambah Pendidikan</h2>
-            <form action="{{ route('admin.education.store') }}" method="POST" enctype="multipart/form-data">
+            <h2 class="h3 text-center mb-4">Edit Pendidikan</h2>
+            <form action="{{ route('admin.education.update', $education->id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="mb-3">
                     <label for="school_name" class="form-label">Nama Sekolah</label>
                     <input type="text" class="form-control @error('school_name') is-invalid @enderror"
-                        id="school_name" name="school_name" required>
+                        id="school_name" name="school_name" value="{{ $education->school_name }}" required>
                     @error('school_name')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -35,7 +37,7 @@
                 <div class="mb-3">
                     <label for="school_location" class="form-label">Lokasi Sekolah</label>
                     <input type="text" class="form-control @error('school_location') is-invalid @enderror"
-                        id="school_location" name="school_location" required>
+                        id="school_location" name="school_location" value="{{ $education->school_location }}" required>
                     @error('school_location')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -44,7 +46,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('admin.education') }}" class="btn btn-outline-secondary mt-3">Kembali</a>
-                    <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+                    <button type="submit" class="btn btn-primary mt-3">Update</button>
                 </div>
             </form>
         </div>

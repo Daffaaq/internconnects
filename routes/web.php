@@ -51,6 +51,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
     Route::prefix('admin')->group(function () {
         Route::get('/education', [EducationController::class, 'index'])->name('admin.education');
+        Route::get('/education/create', [EducationController::class, 'create'])->name('admin.education.create');
+        Route::post('/education', [EducationController::class, 'store'])->name('admin.education.store');
+        Route::get('/admin/education/{education}/edit', [EducationController::class, 'edit'])->name('admin.education.edit');
+        Route::put('/admin/education/{education}', [EducationController::class, 'update'])->name('admin.education.update');
+        Route::delete('/admin/education/{education}', [EducationController::class, 'destroy'])->name('admin.education.destroy');
     });
     Route::prefix('admin')->group(function () {
         Route::get('/superadmin', [AdminController::class, 'index'])->name('admin.superadmin');
