@@ -7,7 +7,12 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\CuricullumVitaeController;
 use App\Http\Controllers\ProposalsController;
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\CategoryInternsController;
+use App\Http\Controllers\IntenshipTempsController;
+use App\Http\Controllers\IntenshipController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GuestController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -24,7 +29,12 @@ use Illuminate\Support\Facades\Auth;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [LandingPageController::class, 'index']);
+Route::get('/', [LandingPageController::class, 'index'])->name('landingpage');
+// Menampilkan form untuk input data
+Route::get('/guest/form', [GuestController::class, 'form'])->name('guest.form');
+
+// Menyimpan data dari form ke dalam database
+Route::post('/guest/store', [GuestController::class, 'store'])->name('guest.store');
 
 Auth::routes();
 
@@ -56,6 +66,22 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/admin/education/{education}/edit', [EducationController::class, 'edit'])->name('admin.education.edit');
         Route::put('/admin/education/{education}', [EducationController::class, 'update'])->name('admin.education.update');
         Route::delete('/admin/education/{education}', [EducationController::class, 'destroy'])->name('admin.education.destroy');
+    });
+    Route::prefix('admin')->group(function () {
+        Route::get('/students', [StudentsController::class, 'index'])->name('admin.students');
+        Route::post('/students', [StudentsController::class, 'store'])->name('admin.students.store');
+    });
+    Route::prefix('admin')->group(function () {
+        Route::get('/categoryintern', [CategoryInternsController::class, 'index'])->name('admin.categoryintern');
+        Route::post('/categoryintern', [CategoryInternsController::class, 'store'])->name('admin.categoryintern.store');
+    });
+    Route::prefix('admin')->group(function () {
+        Route::get('/interntemp', [IntenshipTempsController::class, 'index'])->name('admin.interntemp');
+        Route::post('/interntemp', [IntenshipTempsController::class, 'store'])->name('admin.interntemp.store');
+    });
+    Route::prefix('admin')->group(function () {
+        Route::get('/datafinal', [IntenshipController::class, 'index'])->name('admin.datafinal');
+        Route::post('/datafinal', [IntenshipController::class, 'store'])->name('admin.datafinal.store');
     });
     Route::prefix('admin')->group(function () {
         Route::get('/superadmin', [AdminController::class, 'index'])->name('admin.superadmin');

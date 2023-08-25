@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\students;
 
 class proposals extends Model
 {
@@ -18,6 +19,6 @@ class proposals extends Model
     // Relasi ke tabel Student (contoh jika setiap proposal dimiliki oleh satu mahasiswa)
     public function student()
     {
-        return $this->hasOne(Student::class, 'proposals_id');
+        return $this->hasOne(students::class, 'proposals_id');
     }
 }

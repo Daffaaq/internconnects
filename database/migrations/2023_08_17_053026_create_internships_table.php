@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('start_date'); // Tanggal mulai magang
             $table->date('end_date');   // Tanggal selesai magang
+            $table->date('input_date');
             $table->time('input_time');
             $table->timestamps();
 

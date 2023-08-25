@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\internship;
+use App\Http\Requests\InternshipStoreRequest;
 
 class IntenshipController extends Controller
 {
@@ -13,7 +15,10 @@ class IntenshipController extends Controller
      */
     public function index()
     {
-        //
+        // Mengambil semua data internships
+        $internships = internship::all();
+
+        return view('internships.index', compact('internships'));
     }
 
     /**
@@ -32,9 +37,12 @@ class IntenshipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InternshipStoreRequest  $request)
     {
-        //
+         Internship::create($request->validated());
+
+        return redirect()->route('internships.index')
+            ->with('success', 'Internship position added successfully!');
     }
 
     /**

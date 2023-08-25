@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\categoryintern;
+use App\Http\Requests\CreateCategoryInternRequest;
 
 class CategoryInternsController extends Controller
 {
@@ -13,7 +15,8 @@ class CategoryInternsController extends Controller
      */
     public function index()
     {
-        //
+        $categories = categoryintern::all();
+        return view('admin.category_intern.index', compact('categories'));
     }
 
     /**
@@ -32,9 +35,11 @@ class CategoryInternsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryInternRequest $request)
     {
-        //
+        categoryintern::create($request->all());
+
+        return redirect()->route('guest.form')->with('success', 'Category Intern data added successfully!');
     }
 
     /**

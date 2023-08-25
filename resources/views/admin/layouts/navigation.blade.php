@@ -48,7 +48,7 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="{{ route('admin.students')}}">
                     <span class="icon">
                         <ion-icon name="book-outline"></ion-icon>
                     </span>
@@ -56,14 +56,21 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('admin.categoryintern')}}">
                     <span class="icon">
                         <ion-icon name="contract-outline"></ion-icon>
                     </span>
-                    <span class="title">Internship</span>
+                    <span class="title">Category Intern</span>
                 </a>
             </li>
-
+            <li>
+                <a href="{{ route('admin.interntemp')}}">
+                    <span class="icon">
+                        <ion-icon name="contract-outline"></ion-icon>
+                    </span>
+                    <span class="title">Category Intern</span>
+                </a>
+            </li>
             <li>
                 <a href="#">
                     <span class="icon">

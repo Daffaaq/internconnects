@@ -71,8 +71,10 @@
                         landing
                         pages in minutes. Sign up for free.</p>
                     <button class="btn btn-primary d-inline-flex flex-row align-items-center">
-                        Get started now
-                        <em class="ml-2" data-feather="arrow-right"></em>
+                        <a href="{{ route('guest.form') }}" style="text-decoration: none; color: white;">
+                            Get started now
+                            <em class="ml-2" data-feather="arrow-right"></em>
+                        </a>
                     </button>
                 </div>
             </div>
@@ -130,7 +132,8 @@
                                 </div>
                             </div>
                             <h5>Available globally</h5>
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in
+                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+                                in
                                 nisi commodo, tempus odio a, vestibulum nibh.</p>
                         </div>
                     </div>

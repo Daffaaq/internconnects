@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\internship_temp;
+use App\Http\Requests\InternshipTempRequest;
 
 class IntenshipTempsController extends Controller
 {
@@ -13,7 +15,9 @@ class IntenshipTempsController extends Controller
      */
     public function index()
     {
-        //
+        // Tampilkan daftar posisi magang yang tersedia
+        $internships = internship_temp::all();
+        return view('admin.internshiptemp.index', compact('internships'));
     }
 
     /**
@@ -32,9 +36,11 @@ class IntenshipTempsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InternshipTempRequest $request)
     {
-        //
+        internship_temp::create($request->all());
+
+        return redirect()->route('admin.internshiptemp.index')->with('success', 'Internship position added successfully!');
     }
 
     /**

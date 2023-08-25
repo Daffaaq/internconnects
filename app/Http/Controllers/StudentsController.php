@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\students;
+use App\Http\Requests\CreateStudentRequest;
 
 class StudentsController extends Controller
 {
@@ -13,7 +15,8 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        //
+        $students = students::with(['education', 'curriculumVitae', 'proposal'])->get();
+        return view('admin.student.index', compact('students'));
     }
 
     /**
@@ -34,7 +37,9 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Student::create($request->all());
+
+        return redirect()->route('guest.form')->with('success', 'Student data added successfully!');
     }
 
     /**

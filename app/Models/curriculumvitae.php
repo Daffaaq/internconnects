@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\students;
 
 class curriculumvitae extends Model
 {
@@ -18,6 +19,6 @@ class curriculumvitae extends Model
     // Relasi ke tabel Student (contoh jika setiap CV dimiliki oleh satu mahasiswa)
     public function student()
     {
-        return $this->hasOne(Student::class, 'cv_id');
+        return $this->hasOne(students::class, 'cv_id');
     }
 }

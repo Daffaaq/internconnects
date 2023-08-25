@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\categoryintern;
 
 class internship_temp extends Model
 {
@@ -13,6 +14,6 @@ class internship_temp extends Model
 
     public function category()
     {
-        return $this->belongsTo(CategoryIntern::class, 'category_id');
+        return $this->belongsTo(categoryintern::class, 'category_id');
     }
 }
