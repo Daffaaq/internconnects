@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\File;
 use App\Models\internship;
 use App\Models\curriculumvitae;
 use App\Models\proposals;
@@ -31,55 +32,39 @@ class internshipfinalStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            //file cv
+            'file_cv' => 'required|mimes:pdf,png,jpg|max:102400',
+            //file proposal
+            'file_proposals' => 'required|mimes:pdf|max:102400',
+            //education
+            'school_name' => 'required|string|max:255',
+            'school_location' => 'required|string|max:255',
+            //students
+            'student_id' => 'required|string',
+            'name' => 'required',
+            'address' => 'required',
+            'religion' => 'required',
+            'birthdate' => 'required|date',
+            'gender' => 'required|in:male,female',
+            'phone_number' => 'required',
+            'email' => 'required|email|unique:students',
+            'education_id' => 'required',
+            'cv_id' => 'required',
+            'proposals_id' => 'required',
+            //category intern
+            'duration' => 'required',
+            // interntemp
+            'internship_position' => 'required|string|max:255',
+            'category_id' => 'required|exists:category_interns,id',
+            //internship
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'student_id' => 'required|exists:students,id',
+            'cv_id' => 'required|exists:cvs,id',
+            'proposal_id' => 'required|exists:proposals,id',
+            'education_id' => 'required|exists:educations,id',
+            'internship_category_id' => 'required|exists:internship_categories,id',
+            'internship_temp_id' => 'required|exists:internship_temps,id',
         ];
-    }
-
-    public function store()
-    {
-        // Simpan data ke tabel Students
-        $student = students::create([
-            'email' => $this->input('student_email'),
-            // ... Lanjutkan dengan atribut-atribut lainnya
-        ]);
-
-        // Simpan data ke tabel Education
-        $education = education::create([
-            'school_name' => $this->input('school_name'),
-            // ... Lanjutkan dengan atribut-atribut lainnya
-        ]);
-
-        // Simpan data ke tabel CategoryIntern
-        $categoryIntern = categoryintern::create([
-            'category_name' => $this->input('category_intern'),
-        ]);
-
-        // Simpan data ke tabel InternshipTemp
-        $internshipTemp = internship_temp::create([
-            'internship_position' => $this->input('internship_position'),
-        ]);
-        // Simpan data ke tabel curriculumvitae
-        $internshipTemp = curriculumvitae::create([
-            'cv_file' => $this->input('cv_file'),
-        ]);
-        // Simpan data ke tabel proposals
-        $internshipTemp = proposals::create([
-            'proposal_file' => $this->input('proposal_file'),
-        ]);
-
-        // Simpan data ke tabel Internship
-        $internship = internship::create([
-            'start_date' => $this->input('start_date'),
-            'end_date' => $this->input('end_date'),
-            // ... Lanjutkan dengan atribut-atribut lainnya
-            'input_date' => now()->format('Y-m-d'),
-            'input_time' => now()->format('H:i'),
-            'student_id' => $student->id,
-            'cv_id' => $cv->id,
-            'proposal_id' => $proposal->id,
-            'education_id' => $education->id,
-            'internship_category_id' => $categoryIntern->id,
-            'internship_temp_id' => $internshipTemp->id,
-        ]);
     }
 }

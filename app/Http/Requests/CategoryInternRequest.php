@@ -24,8 +24,7 @@ class CategoryInternRequest extends FormRequest
     public function rules()
     {
         return [
-            '3_months' => 'required',
-            '6_months' => 'required',
+            'duration' => 'required|in:3_months,6_months',
         ];
     }
 }

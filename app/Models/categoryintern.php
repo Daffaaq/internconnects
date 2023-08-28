@@ -10,8 +10,7 @@ class categoryintern extends Model
     use HasFactory;
 
     protected $fillable = [
-        '3_months',
-        '6_months',
+        'duration',
     ];
     public function internshipTemps()
     {
